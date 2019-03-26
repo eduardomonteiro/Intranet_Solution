@@ -1,0 +1,54 @@
+﻿@using Intranet.Data.Enums
+@if (User.IsInRole("EducacaoContinuada-Admin"))
+{
+    <a href="@Url.Action("Novo", "EducacaoContinuada")"><div class="buttoncolor btn-newlink"><i class="fa fa-plus-square" aria-hidden="true"></i>Novo treinamento</div></a>
+
+}
+<section class="content-noticias">
+    <div class="mobile-filter buttoncolor"><i class="fa fa-filter" aria-hidden="true"></i> Filtrar</div>
+    <div class="bloco-filter">
+        <div class="filter-area">
+            <button class="active" data-edu="todos" id="btnTodos">Todos</button>
+            <button data-edu="todos" id="btnRealizados">Realizados</button>
+            <button data-edu="todos" id="btnNRealizados">Não Realizados</button>
+        </div>
+        <div class="filters">
+            <div class="container">
+                <form action="/" method="post" id="frmBuscaCursos">
+                    <div class="row">
+                        <div class="col m5 s12">
+                            <label for="">&nbsp</label>
+                            <input type="text" name="Busca" id="palavrachave" placeholder="Palavra-chave">
+                        </div>
+                        <div class="col m3 s12">
+                            <label for="">Categoria</label>
+                            @Html.DropDownList("Categoria", EnumHelper.GetSelectList(typeof(TipoCurso)), "Selecione")
+                        </div>
+                        <div class="col m3 s12">
+                            <label for="">Classificação</label>
+                            <select name="Realizado" id="Realizado">
+                                <option value="">Selecione</option>
+                                <option value="true">Realizados</option>
+                                <option value="false">Não Realizados</option>
+                            </select>
+                        </div>
+                        <div class="col m1 s12">
+                            <label for="">&nbsp</label>
+                            <button type="submit">
+                                <i class="fa fa-search" aria-hidden="true"></i>
+                            </button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <div id="divCursos" style="min-height: 400px;"></div>
+</section>
+
+@section scripts{
+    <script src="~/js/educacaoContinuada.js"></script>
+    <script>
+        educacaoContinuada.init();
+    </script>
+}

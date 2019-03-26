@@ -1,0 +1,13 @@
+﻿@model Intranet.Data.Entities.Institucional
+@{
+    ViewBag.Title = Model.Titulo;
+}
+<section class="content-holding">
+    @if (!string.IsNullOrEmpty(Model.Foto))
+    {
+        <img src="~/Content/Institucional/@Model.Foto" alt="@Model.Titulo" class="imgdes">
+    }
+    <article>
+        @Html.Raw(Model.Texto)
+    </article>
+</section>

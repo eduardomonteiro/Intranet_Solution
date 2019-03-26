@@ -1,0 +1,316 @@
+﻿@using Intranet.Data.Entities
+@using Intranet.Data.Enums
+@using $safeprojectname$.Util
+@using Microsoft.AspNet.Identity
+@model Comunicado
+<section class="content-noticias">
+    <div class="info-interna">
+        <form class="formulario-base" method="post" action="@Url.Action("Editar", "Comunicados")" enctype="multipart/form-data">
+            @Html.HiddenFor(m => m.Id)
+            @Html.HiddenFor(m => m.Imagem)
+            <div class="container">
+                <div class="row">
+                    <div class="col l3 m4 s12">
+                        @Html.LabelFor(m => m.Titulo)
+                    </div>
+                    <div class="col l9 m8 s12">
+                        @Html.TextBoxFor(m => m.Titulo)
+                        @Html.ValidationMessageFor(m => m.Titulo)
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col l3 m4 s12">
+                        @Html.LabelFor(m => m.Tipo)
+                    </div>
+                    <div class="col l9 m8 s12">
+                        @Html.DropDownListFor(m => m.Tipo, EnumHelper.GetSelectList(typeof(TipoComunicado)), "Selecione")
+                        @Html.ValidationMessageFor(m => m.Tipo)
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col l3 m4 s12">
+                        @Html.LabelFor(m => m.Data)
+                    </div>
+                    <div class="col l9 m8 s12">
+                        @Html.TextBoxFor(m => m.Data, new { type = "text", @class = "data" })
+                        @Html.ValidationMessageFor(m => m.Data)
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col l3 m4 s12">
+                        @Html.LabelFor(m => m.Imagem)
+                    </div>
+                    <div class="col l9 m8 s12">
+                        @if (!string.IsNullOrEmpty(Model.Imagem))
+                        {
+                            <div class="legenda">
+                                <strong>Atual:</strong> <a target="_blank" href="/Content/Comunicados/@Model.Imagem">@Model.Imagem</a>
+                            </div>
+                        }
+                        <input type="file" name="foto" id="foto" accept=".jpg,.jpeg,.png,.gif">
+                        @Html.ValidationMessageFor(m => m.Imagem)
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col l3 m4 s12">
+                        <label for="comu-anexos">
+                            Anexos:
+                        </label>
+                    </div>
+                    <div class="col l9 m8 s12">
+                        <div class="row">
+                            <div class="col l9 m8 s12">
+                                <input type="file" name="arquivos" id="arquivos" value="" multiple="multiple" accept=".jpg,.jpeg,.png,.gif,.pdf,.doc,.docx,.txt,.odt,.rtf,.xls,.xlsx,.ai,.eps" />
+                            </div>
+                            <div class="col l3 m4 s12">
+                                <button type="button" id="btnAnexos" class="btn-form">
+                                    <i class="fa fa-plus-square" aria-hidden="true"></i>Adicionar Arquivo
+                                </button>
+                            </div>
+                        </div>
+                        @if (Model.Anexos.Any())
+                        {
+                            <div class="list-anexos">
+                                <div class="row">
+                                    <div class="col s12">
+                                        <p><strong>LISTA DE ANEXOS</strong></p>
+                                    </div>
+                                </div>
+                                @foreach (var anexo in Model.Anexos)
+                                {
+                                    <div class="row">
+                                        <div class="col m6 s12">
+                                            <p>@anexo.Arquivo</p>
+                                        </div>
+                                        <div class="col m2 s12">
+                                            <p>@Html.TamanhoAnexoComunicado(anexo.Arquivo)</p>
+                                        </div>
+                                        <div class="col m3 s12">
+                                            <p>@anexo.Data.ToShortDateString() - @anexo.Data.ToShortTimeString()</p>
+                                        </div>
+                                        <div class="col m1 s12">
+                                            <div class="btn-delete fa fa-times btnExcluir" data-link="@Url.Action("ExcluirAnexo", "Comunicados", new { id = anexo.Id })"></div>
+                                        </div>
+                                    </div>
+                                }
+                            </div>
+                        }
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col l3 m4 s12">
+                        @Html.LabelFor(m => m.Texto)
+                    </div>
+                    <div class="col l9 m8 s12">
+                        @Html.TextAreaFor(m => m.Texto)
+                        @Html.ValidationMessageFor(m => m.Texto)
+                    </div>
+                </div>
+                <!-- Destaque -->
+                <div class="row">
+                    <div class="col l3 m4 s12">
+                        <label for="Destaque">
+                            Destaque
+                        </label>
+                    </div>
+                    <div class="col l9 m8 s12">
+                        <div class="list-check">
+                            <div class="col l6 m12 s12">
+                                <div class="item">
+                                    <label for="Destaque">
+                                        @Html.CheckBoxFor(m => m.Destaque) DEFINIR COMO DESTAQUE NA TELA INICIAL
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col l3 m4 s12">
+                        <label for="Shoppings">
+                            Shoppings
+                        </label>
+                    </div>
+                    <div class="col l9 m8 s12">
+                        <div class="list-check">
+                            @foreach (Empreendimento empreendimento in ViewBag.Empreendimentos)
+                            {
+                                <div class="col l4 m12 s12">
+                                    <div class="item" style="min-height: 73px;">
+                                        <label>
+                                            <input type="checkbox" name="shoppings[]" value="@empreendimento.Id"> @empreendimento.Nome
+                                        </label>
+                                    </div>
+                                </div>
+                            }
+                        </div>
+                    </div>
+                </div>
+                @*<div class="row">
+                    <div class="col l3 m4 s12">
+                        <label>
+                            Sexo
+                        </label>
+                    </div>
+                    <div class="col l9 m8 s12">
+                        <div class="list-check radio">
+                            <div class="col l4 m12 s12">
+                                <div class="item">
+                                    <label>
+                                        <input type="radio" name="sexo[]" id="sexoM" value="Masculino"> Masculino
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="col l4 m12 s12">
+                                <div class="item">
+                                    <label>
+                                        <input type="radio" name="sexo[]" id="sexoF" value="Feminino"> Feminino
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>*@
+                <div class="row">
+                    <div class="col l3 m4 s12">
+                        <label for="comu-destaque">
+                            Cargos
+                        </label>
+                    </div>
+                    <div class="col l9 m8 s12">
+                        <div class="list-check">
+                            <div class="col l4 m12 s12">
+                                <div class="item">
+                                    <label for="cargo1">
+                                        <input type="checkbox" name="cargo[]" id="cargo1" value="Cargo 1"> Cargo 1
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="col l4 m12 s12">
+                                <div class="item">
+                                    <label for="cargo2">
+                                        <input type="checkbox" name="cargo[]" id="cargo2" value="Cargo 2"> Cargo 2
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="col l4 m12 s12">
+                                <div class="item">
+                                    <label for="cargo3">
+                                        <input type="checkbox" name="cargo[]" id="cargo3" value="Cargo 3"> Cargo 3
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="col l4 m12 s12">
+                                <div class="item">
+                                    <label for="cargo4">
+                                        <input type="checkbox" name="cargo[]" id="cargo4" value="Cargo 4"> Cargo 4
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="col l4 m12 s12">
+                                <div class="item">
+                                    <label for="cargo5">
+                                        <input type="checkbox" name="cargo[]" id="cargo5" value="Cargo 5"> Cargo 5
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="col l4 m12 s12">
+                                <div class="item">
+                                    <label for="cargo6">
+                                        <input type="checkbox" name="cargo[]" id="cargo6" value="Cargo 6"> Cargo 6
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="list-botoes">
+                    <button class="btn-form red" type="submit">
+                        <i class="fa fa-floppy-o" aria-hidden="true"></i>Salvar
+                    </button>
+                    <button class="btn-form" type="reset">
+                        <i class="fa fa-times" aria-hidden="true"></i>Cancelar
+                    </button>
+                </div>
+            </div>
+        </form>
+    </div>
+</section>
+
+@section scripts
+{
+    <script type="text/javascript" src="~/libs/ckeditor/ckeditor.js"></script>
+    <script type="text/javascript" src="~/libs/ckeditor/sample.js"></script>
+    <script>
+        initSample("Texto");
+
+        $("#foto").change(function () {
+            var fileExtension = [
+                'jpg', 'jpeg', 'png', 'gif'
+            ];
+            var arquivos = $("#foto")[0].files;
+            $.map(arquivos, function (val) {
+                if ($.inArray(val.name.split('.').pop().toLowerCase(), fileExtension) == -1) {
+                    swal('Oops...', 'São permitidos apenas os formatos: ' + fileExtension.join(', '), 'error');
+                    $("#foto").val('');
+                }
+            });
+        });
+
+        $("#arquivos").change(function () {
+            var fileExtension = [
+                'jpg', 'jpeg', 'png', 'gif', 'pdf', 'doc', 'docx', 'txt', 'odt', 'rtf', 'xls', 'xlsx', 'ai', 'eps'
+            ];
+            var arquivos = $("#arquivos")[0].files;
+            $.map(arquivos, function (val) {
+                if ($.inArray(val.name.split('.').pop().toLowerCase(), fileExtension) == -1) {
+                    swal('Oops...', 'São permitidos apenas os formatos: ' + fileExtension.join(', '), 'error');
+                    $("#arquivos").val('');
+                }
+            });
+        });
+
+        @if (!string.IsNullOrEmpty(Model.Shoppings))
+        {
+            foreach (var shopping in Model.Shoppings.Split(','))
+            {
+                <text>$("input[name='shoppings[]'][value='@shopping']").prop("checked", true)</text>
+            }
+        }
+
+        @*@if (!string.IsNullOrEmpty(Model.Sexo))
+        {
+            if (Model.Sexo.Contains(','))
+            {
+                foreach (var sexo in "" + Model.Sexo.Split(','))
+                {
+                    <text>$("input[name='sexo[]'][value='@sexo']").prop("checked", true)</text>
+                }
+            }
+            else
+            {
+                <text>$("input[name='sexo[]'][value='@Model.Sexo']").prop("checked", true)</text>
+            }
+        }*@
+
+        @if (!string.IsNullOrEmpty(Model.Cargos))
+        {
+            if (Model.Cargos.Contains(','))
+            {
+                 foreach (var cargo in "" + Model.Cargos.Split(','))
+                {
+                <text>$("input[name='cargo[]'][value='@cargo']").prop("checked", true)</text>
+                }
+            }
+            else
+            {
+                <text>$("input[name='cargo[]'][value='@Model.Cargos']").prop("checked", true)</text>
+            }
+
+        }
+
+        $("#btnAnexos").click(function () {
+            $("form").attr("action", "@Url.Action("Anexos", "Comunicados")").submit();
+        });
+    </script>
+}

@@ -1,0 +1,49 @@
+﻿@using Intranet.Data.Enums
+@model Intranet.Data.Entities.Curso
+<section class="content-noticias">
+    <div class="info-interna">
+        @if (User.IsInRole("EducacaoContinuada-Admin"))
+        {
+            <div class="edits">
+                <div class="icon-edits"></div>
+                <div class="subedit">
+                    <div class="btnEditar" data-link="@Url.Action("Editar", "EducacaoContinuada", new {Model.Id})">
+                        <i class="fa fa-pencil-square-o" aria-hidden="true"></i>Editar
+                    </div>
+                    <div class="btnExcluir" data-link="@Url.Action("Excluir", "EducacaoContinuada", new {Model.Id})">
+                        <i class="fa fa-trash-o" aria-hidden="true"></i>Excluir
+                    </div>
+                </div>
+            </div>
+        }
+        <p class="title">@Model.Nome</p>
+        <div class="category">@Model.Categoria.ToString()</div>
+        @if (Model.Categoria == TipoCurso.Imagem)
+        {
+            <img src="~/Content/Treinamentos/@Model.Midia" alt="@Model.Nome">
+        }
+        @if (Model.Categoria == TipoCurso.Audio)
+        {
+            <audio controls style="width: 100%; margin-bottom: 20px;">
+                <source src="~/Content/Treinamentos/@Model.Midia" type="audio/mpeg">
+            </audio>
+        }
+        @if (Model.Categoria == TipoCurso.Video)
+        {
+            <iframe style="margin-bottom: 20px;" width="100%" height="315" src="https://www.youtube.com/embed/@Model.Midia?autoplay=1" frameborder="0" allowfullscreen></iframe>
+        }
+        <p>@Html.Raw(Model.Descricao)</p>
+    </div>
+</section>
+@if (Model.Categoria == TipoCurso.Video || Model.Categoria == TipoCurso.Audio)
+{
+    @section scripts
+    {
+        <script>
+            window.setTimeout(function() {
+                    $.post('@Url.Action("Finalizar", "EducacaoContinuada")', {id: @Model.Id});
+                },
+                @(Model.TempoValidacao * 60 * 1000));
+        </script>
+    }
+}

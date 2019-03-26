@@ -1,0 +1,39 @@
+﻿@using Intranet.Data.Enums
+@if (User.IsInRole("Comunicados-Admin"))
+{
+    <a href="@Url.Action("Novo", "Comunicados")"><div class="buttoncolor btn-newlink"><i class="fa fa-plus-square" aria-hidden="true"></i>Novo Comunicado</div></a>
+}
+<section class="content-noticias">
+    <div class="mobile-filter buttoncolor"><i class="fa fa-filter" aria-hidden="true"></i> Filtrar</div>
+    <div class="bloco-filter">
+        <div class="filters">
+            <div class="container">
+                <form action="/" method="post" id="frmBuscaComunicados">
+                    <div class="row">
+                        <div class="col m5 s12">
+                            <label for="">&nbsp</label>
+                            <input type="text" name="palavrachave" id="palavrachave" placeholder="Palavra-chave">
+                        </div>
+                        <div class="col m3 s12">
+                            <label for="">Tipo</label>
+                            @Html.DropDownList("Tipo", EnumHelper.GetSelectList(typeof(TipoComunicado)), "Selecione")
+                        </div>
+                        <div class="col m1 s12">
+                            <label for="">&nbsp</label>
+                            <button type="submit">
+                                <i class="fa fa-search" aria-hidden="true"></i>
+                            </button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <div id="divComunicados" style="min-height: 400px;"></div>
+</section>
+@section scripts{
+    <script src="~/js/comunicados.js"></script>
+    <script>
+        comunicados.init();
+    </script>
+}

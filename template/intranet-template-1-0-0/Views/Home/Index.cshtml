@@ -1,0 +1,259 @@
+﻿@using $safeprojectname$.Util
+@model $safeprojectname$.Models.HomeVm
+@{
+    ViewBag.Title = "Home";
+    ViewBag.Area = "Home";
+}
+
+<section class="homefeatured">
+    <div class="ban-featured">
+        @foreach (var comunicado in Model.ComunicadosDestaque)
+        {
+            <div class="item">
+                <a href="@Url.Action("Detalhes", "Comunicados", new {id = comunicado.Id})">
+                    @if (!string.IsNullOrEmpty(comunicado.Imagem))
+                    {
+
+                        @*<figure style="background-image: url(/Content/Comunicados/@comunicado.Imagem)" alt="@comunicado.Titulo" title="@comunicado.Titulo"></figure>*@
+                        <img src="~/Content/Comunicados/@comunicado.Imagem" alt="@comunicado.Titulo" title="@comunicado.Titulo">
+                    }
+                    <div class="info">
+                        <p class="date">@comunicado.Data.ToString("dd 'de' MMMM 'de' yyyy")</p>
+                        <p class="title">@comunicado.Titulo</p>
+                        <div class="category">@Html.EnumDisplayNameFor(comunicado.Tipo)</div>
+                    </div>
+                </a>
+            </div>
+        }
+    </div>
+    <div class="calendario">
+        <div id="datepicker"></div>
+        <a href="@Url.Action("Index", "Calendario")"><div class="viewmore">ver mais<i class="fa fa-arrow-circle-o-right" aria-hidden="true"></i></div></a>
+    </div>
+</section>
+@if (Model.Comunicados.Any())
+{
+    <section class="homecommunicated">
+        <h2>Comunicados</h2>
+        <div class="list-communicated">
+            @foreach (var comunicado in Model.Comunicados)
+            {
+                <div class="item @if (!string.IsNullOrEmpty(comunicado.Imagem))
+                                 {
+                                     <text>image</text>
+                                 } ">
+                    <a href="@Url.Action("Detalhes", "Comunicados", new {id = comunicado.Id})">
+                        @if (!string.IsNullOrEmpty(comunicado.Imagem)) { <img src="~/Content/Comunicados/@comunicado.Imagem" alt=""> }
+                        <div class="info">
+                            <p class="date">@comunicado.Data.ToString("dd 'de' MMMM 'de' yyyy")</p>
+                            <p class="title">@comunicado.Titulo</p>
+                            <div class="category">@Html.EnumDisplayNameFor(comunicado.Tipo)</div>
+                        </div>
+                    </a>
+                </div>
+            }
+        </div>
+        <a href="@Url.Action("Index", "Comunicados")"><div class="viewmore">ver mais<i class="fa fa-arrow-circle-o-right" aria-hidden="true"></i></div></a>
+    </section>
+}
+<section class="homeindoor">
+    <div class="container">
+        <div class="row">
+            <div class="col l4 m12">
+                <h2>Novos Colaboradores</h2>
+                <div class="box-contributors">
+                    @foreach(var usuario in Model.NovosColaboradores) { 
+                        <div class="item">
+                            @if (!string.IsNullOrEmpty(usuario.Avatar))
+                            {
+                                <img src="~/Content/Colaboradores/@usuario.Avatar" alt="@usuario.Nome">
+                            }
+                            else
+                            {
+                                <img src="~/Content/Colaboradores/padrao.jpg" alt="@usuario.Nome">
+                            }
+                            <div class="info">
+                                <p class="title">@usuario.Nome</p>
+                                <p class="txt2">@usuario.Cargo</p>
+                                <p class="txt3">@usuario.Email</p>
+                            </div>
+                        </div>
+                    }
+                </div>
+                <a href="@Url.Action("Index", "Colaboradores")"><div class="viewmore">ver mais<i class="fa fa-arrow-circle-o-right" aria-hidden="true"></i></div></a>
+            </div>
+            <div class="col l4 m12">
+                <h2>Aniversariantes</h2>
+                <div class="box-birthday">
+                    @foreach(var usuario in Model.Aniversariantes) { 
+                        <div class="item @if (usuario.DataNascimento.Date == DateTime.Now.Date)
+                                         {
+                                             <text>niver</text>
+                                         }">
+                            @if (!string.IsNullOrEmpty(usuario.Avatar))
+                            {
+                                <img src="~/Content/Colaboradores/@usuario.Avatar" alt="@usuario.Nome">
+                            }
+                            else
+                            {
+                                <img src="~/Content/Colaboradores/padrao.jpg" alt="@usuario.Nome">
+                            }
+                            <div class="info">
+                                <p class="date">@usuario.DataNascimento.ToString("dd 'de' MMMM")</p>
+                                <p class="title">@usuario.Nome</p>
+                                <p class="txt2">@usuario.Cargo</p>
+                                <p class="txt3">@usuario.Empreendimento.Nome</p>
+                            </div>
+                        </div>
+                    }
+                </div>
+            </div>
+            <div class="col l4 m12">
+                <h2>Links Úteis</h2>
+                <div class="box-links">
+                    @foreach(var link in Model.LinksUteis) { 
+                        <div class="item">
+                            <img src="~/images/icon-link.png" alt="">
+                            <div class="info">
+                                <p class="title">@link.Titulo</p>
+                                <p class="txt2">@link.Empreendimento.Nome</p>
+                                <p class="txt3"><a href="@link.Url" target="_blank">@link.Url</a></p>
+                            </div>
+                        </div>
+                    }
+                </div>
+                <a href="@Url.Action("Index", "LinksUteis")"><div class="viewmore">ver mais<i class="fa fa-arrow-circle-o-right" aria-hidden="true"></i></div></a>
+            </div>
+        </div>
+    </div>
+</section>
+<section class="homesystem">
+    <h2>Sistemas Internos</h2>
+    <div class="list-system">
+        <div class="item">
+            <div class="logo">
+                <a href="http://www.reserve.com.br/">
+                    <img src="~/images/reserve.jpg" alt="">
+                </a>
+            </div>
+            <div class="info">
+                <a href="http://www.reserve.com.br/">
+                    <p class="title">Viagens</p>
+                    @*<p>Gestão de dispesas e viagens.</p>*@
+                </a>
+            </div>
+        </div>
+        <div class="item">
+            <div class="logo">
+                <a href="https://powerbi.microsoft.com/pt-br/">
+                    <img src="~/images/PowerBI.jpg" alt="">
+                </a>
+            </div>
+            <div class="info">
+                <a href="https://powerbi.microsoft.com/pt-br/">
+                    <p class="title">BI</p>
+                    @*<p>Power BI - um pacote de ferramentas de análise de negócios.</p>*@
+                </a>
+            </div>
+        </div>
+        <div class="item">
+            <div class="logo">
+                <a href="https://wiseitcsc.partage.com.br:8443/CCenterWeb/">
+                    <img src="~/images/wiseit.jpg" alt="">
+                </a>
+            </div>
+            <div class="info">
+                <a href="https://wiseitcsc.partage.com.br:8443/CCenterWeb/">
+                    <p class="title">Wise IT</p>
+                    @*<p>Solução em CRM.</p>*@
+                </a>
+            </div>
+        </div>
+        <div class="item">
+            <div class="logo">
+                <a href="https://partage.mereo.com">
+                    <img src="~/images/mereo.jpg" alt="">
+                </a>
+            </div>
+            <div class="info">
+                <a href="https://partage.mereo.com">
+                    <p class="title">Gestão de Metas e Desempenho</p>
+                    @*<p>Plataforma de serviço de consultoria.</p>*@
+                </a>
+            </div>
+        </div>
+            <div class="item">
+                <div class="logo">
+                    <a href="https://terabyte.freshdesk.com/support/login">
+                        <img src="~/images/Freshdesk.jpg" alt="">
+                    </a>
+                </div>
+                <div class="info">
+                    <a href="https://terabyte.freshdesk.com/support/login">
+                        <p class="title">Help Desk</p>
+                        @*<p>Portal de Help Desk de TI.</p>*@
+                    </a>
+                </div>
+            </div>
+        <div class="item">
+            <div class="logo">
+                <a href="http://189.39.31.130:8249/">
+                    <img src="~/images/partage.jpg" alt="">
+                </a>
+            </div>
+            <div class="info">
+                <a href="http://189.39.31.130:8249/">
+                    <p class="title">Portal RH</p>
+                    @*<p>Portal Microsiga Protheus para uso do RH.</p>*@
+                </a>
+            </div>  
+        </div>
+    </div>
+</section>
+<section class="homenews">
+    <h2>Notícias</h2>
+    <div class="list-news">
+        @foreach(var noticia in Model.Noticias) { 
+            <article  @if (!string.IsNullOrEmpty(noticia.Imagem))
+                      {
+                          <text>class="image" style="background-image: url('/Content/Noticias/@noticia.Imagem')"</text>
+                      } >
+                <a href="@Url.Action("Detalhes", "Noticias", new { id=noticia.Id })">
+                    <div class="info">
+                        <p class="date">@noticia.Data.ToString("dd 'de' MMMM 'de' yyyy")</p>
+                        <p class="title">@noticia.Titulo</p>
+                        <div class="category">@noticia.Categoria.Nome</div>
+                    </div>
+                </a>
+            </article>
+        }
+    </div>
+    <a href="@Url.Action("Index", "Noticias")"><div class="viewmore">ver mais<i class="fa fa-arrow-circle-o-right" aria-hidden="true"></i></div></a>
+</section>
+@section style{
+    <style>
+        td.tem-evento { background: #ea99a3; }
+    </style>
+}
+@section scripts
+{
+    <script>
+        $(function () {
+            var your_dates = ["2017-7-21", "2017-7-24", "2011-7-27", "2011-7-28"];
+
+            $("#datepicker").datepicker({
+                beforeShowDay: function (date) {
+                    var m = date.getMonth(), d = date.getDate(), y = date.getFullYear();
+                    // check if date is in your array of dates
+                    if ($.inArray(y + "-" + (m + 1) + "-" + d, your_dates) >= 0) {
+                        // if it is return the following.
+                        return [true, 'tem-evento', ''];
+                    } else {
+                        // default
+                        return [true, '', ''];
+                    }
+                }
+            });
+        });
+    </script>
+}

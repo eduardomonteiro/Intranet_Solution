@@ -1,0 +1,53 @@
+﻿@using $safeprojectname$.Util
+@model IEnumerable<Intranet.Data.Entities.Comunicado>
+
+@if (!Model.Any())
+{
+    <p>Nenhuma notícia encontrada.</p>
+}
+else
+{
+    <p>Total de @Model.Count() comunicados</p>
+
+    <div class="list-noticias">
+        <div class="container">
+            <div class="row">
+                @foreach (var comunicado in Model)
+                {
+                    <div class="col l3 m6 s12">
+                        <article
+                             @if (!string.IsNullOrEmpty(comunicado.Imagem))
+                             {
+                                 <text>class='image' data-imagem='@comunicado.Imagem'</text>
+                             }>
+                            @if (User.IsInRole("Comunicados-Admin"))
+                            {
+                                <div class="edits">
+                                    <div class="icon-edits"></div>
+                                    <div class="subedit">
+                                        <div class="btnEditar" data-link="@Url.Action("Editar", "Comunicados", new {comunicado.Id})">
+                                            <i class="fa fa-pencil-square-o" aria-hidden="true"></i>Editar
+                                        </div>
+                                        <div class="btnExcluir" data-link="@Url.Action("Excluir", "Comunicados", new {comunicado.Id})">
+                                            <i class="fa fa-trash-o" aria-hidden="true"></i>Excluir
+                                        </div>
+                                    </div>
+                                </div>
+                            }
+                            <a href="@Url.Action("Detalhes", "Comunicados", new {id = comunicado.Id})">
+                                <div class="info">
+                                    <p class="date">@comunicado.Data.ToString("dd 'de' MMMM 'de' yyyy")</p>
+                                    <p class="title">@comunicado.Titulo</p>
+                                    <div class="category">@Html.EnumDisplayNameFor(comunicado.Tipo)</div>
+                                </div>
+                            </a>
+                        </article>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+    <div class="btn-carregarmais">
+        <img src="~/images/btn-carregarmais.png" alt="">
+    </div>
+}

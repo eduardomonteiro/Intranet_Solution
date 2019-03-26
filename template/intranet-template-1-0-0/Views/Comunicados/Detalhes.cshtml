@@ -1,0 +1,50 @@
+﻿@using $safeprojectname$.Util
+@model Intranet.Data.Entities.Comunicado
+<section class="content-noticias">
+    <div class="info-interna">
+        @if (User.IsInRole("Comunicados-Admin"))
+        {
+            <div class="edits">
+                <div class="icon-edits"></div>
+                <div class="subedit">
+                    <div class="btnEditar" data-link="@Url.Action("Editar", "Comunicados", new {Model.Id})">
+                        <i class="fa fa-pencil-square-o" aria-hidden="true"></i>Editar
+                    </div>
+                    <div class="btnExcluir" data-link="@Url.Action("Excluir", "Comunicados", new {Model.Id})">
+                        <i class="fa fa-trash-o" aria-hidden="true"></i>Excluir
+                    </div>
+                </div>
+            </div>
+        }
+        <p class="date">@Model.Data.ToString("dd 'de' MMMM 'de' yyyy")</p>
+        <p class="title">@Model.Titulo</p>
+        <div class="category">@Html.EnumDisplayNameFor(Model.Tipo)</div>
+        @if (!string.IsNullOrEmpty(Model.Imagem))
+        {
+            <img src="~/Content/Comunicados/@Model.Imagem" alt="@Model.Titulo">
+        }
+        @Html.Raw(Model.Texto)
+        @if (Model.Anexos.Any())
+        {
+            <div class="anexos">
+                <p><strong>Anexos</strong></p>
+                <div class="list-news list-arquivos">
+                    @foreach (var anexo in Model.Anexos)
+                    {
+                        <div class="item">
+                            <div class="topo">
+                                <i class="fa fa-file-pdf-o" aria-hidden="true"></i>
+                                <p>@Html.TamanhoAnexoComunicado(anexo.Arquivo)</p>
+                            </div>
+                            <div class="info">
+                                <p>@anexo.Data.ToString("dd 'de' MMMM 'de' yyyy")</p>
+                                <p class="title">@anexo.Arquivo</p>
+                                <a href="@Url.Action("Download", new {arquivo = anexo.Arquivo})"><button>download</button></a>
+                            </div>
+                        </div>
+                    }
+                </div>
+            </div>
+        }
+    </div>
+</section>

@@ -1,0 +1,63 @@
+﻿@model Intranet.Data.Entities.LinkUtil
+<section class="content-internas">
+    <div class="info-interna">
+        <form class="formulario-base" method="post" action="@Url.Action("Editar", "LinksUteis")">
+            @Html.HiddenFor(m => m.Id)
+            <div class="container">
+                <div class="row">
+                    <div class="col l3 m4 s12">
+                        @Html.LabelFor(m => m.Titulo)
+                    </div>
+                    <div class="col l9 m8 s12">
+                        @Html.TextBoxFor(m => m.Titulo)
+                        @Html.ValidationMessageFor(m => m.Titulo)
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col l3 m4 s12">
+                        @Html.LabelFor(m => m.IdEmpreendimento)
+                    </div>
+                    <div class="col l9 m8 s12">
+                        @Html.DropDownListFor(m => m.IdEmpreendimento, new SelectList(ViewBag.Empreendimentos, "Id", "Nome"), "Selecione")
+                        @Html.ValidationMessageFor(m => m.IdEmpreendimento)
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col l3 m4 s12">
+                        @Html.LabelFor(m => m.Url)
+                    </div>
+                    <div class="col l9 m8 s12">
+                        @Html.TextBoxFor(m => m.Url)
+                        @Html.ValidationMessageFor(m => m.Url)
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col l3 m4 s12">
+                        @Html.LabelFor(m => m.Descricao)
+                    </div>
+                    <div class="col l9 m8 s12">
+                        @Html.TextBoxFor(m => m.Descricao)
+                        @Html.ValidationMessageFor(m => m.Descricao)
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col l3 m4 s12">
+                        @Html.LabelFor(m => m.Data)
+                    </div>
+                    <div class="col l9 m8 s12">
+                        @Html.TextBoxFor(m => m.Data, new { type = "text", @class = "data" })
+                        @Html.ValidationMessageFor(m => m.Data)
+                    </div>
+                </div>
+                <div class="list-botoes">
+                    <button class="btn-form red" type="submit">
+                        <i class="fa fa-floppy-o" aria-hidden="true"></i>Salvar
+                    </button>
+                    <button class="btn-form" type="reset">
+                        <i class="fa fa-times" aria-hidden="true"></i>Cancelar
+                    </button>
+                </div>
+            </div>
+        </form>
+    </div>
+</section>

@@ -1,0 +1,86 @@
+﻿@model Intranet.Data.Entities.Documento
+<section class="content-internas">
+    <div class="info-interna">
+        <form class="formulario-base" method="post" action="@Url.Action("Editar", "Documentos")" enctype="multipart/form-data">
+            @Html.HiddenFor(m => m.Tipo)
+            @Html.HiddenFor(m => m.Id)
+            @Html.HiddenFor(m => m.Arquivo)
+            <div class="container">
+                <div class="row">
+                    <div class="col l3 m4 s12">
+                        @Html.LabelFor(m => m.Nome)
+                    </div>
+                    <div class="col l9 m8 s12">
+                        @Html.TextBoxFor(m => m.Nome)
+                        @Html.ValidationMessageFor(m => m.Nome)
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col l3 m4 s12">
+                        @Html.LabelFor(m => m.IdEmpreendimento)
+                    </div>
+                    <div class="col l9 m8 s12">
+                        @Html.DropDownListFor(m => m.IdEmpreendimento, new SelectList(ViewBag.Empreendimentos, "Id", "Nome"), "Selecione")
+                        @Html.ValidationMessageFor(m => m.IdEmpreendimento)
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col l3 m4 s12">
+                        @Html.LabelFor(m => m.IdCategoria)
+                    </div>
+                    <div class="col l9 m8 s12">
+                        @Html.DropDownListFor(m => m.IdCategoria, new SelectList(ViewBag.Categorias, "Id", "Nome"), "Selecione")
+                        @Html.ValidationMessageFor(m => m.IdCategoria)
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col l3 m4 s12">
+                        @Html.LabelFor(m => m.Arquivo)
+                    </div>
+                    <div class="col l9 m8 s12">
+                        @if (!string.IsNullOrEmpty(Model.Arquivo))
+                        {
+                            <div class="legenda"><strong>Atual:</strong> <a target="_blank" href="~/Content/Documentos/@Model.Arquivo">@Model.Arquivo</a></div>
+                        }
+                        <input type="file" name="File" id="File" value="" accept=".jpg,.jpeg,.png,.gif,.pdf,.doc,.docx,.txt,.odt,.rtf,.xls,.xlsx,.ai,.eps" />
+                        @Html.ValidationMessageFor(m => m.Arquivo)
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col l3 m4 s12">
+                        @Html.LabelFor(m => m.Data)
+                    </div>
+                    <div class="col l9 m8 s12">
+                        @Html.TextBoxFor(m => m.Data, new { type = "text", @class = "data" })
+                        @Html.ValidationMessageFor(m => m.Data)
+                    </div>
+                </div>
+                <div class="list-botoes">
+                    <button class="btn-form red" type="submit">
+                        <i class="fa fa-floppy-o" aria-hidden="true"></i>Salvar
+                    </button>
+                    <button class="btn-form" type="reset">
+                        <i class="fa fa-times" aria-hidden="true"></i>Cancelar
+                    </button>
+                </div>
+            </div>
+        </form>
+    </div>
+</section>
+
+@section scripts{
+    <script>
+        $("#File").change(function () {
+            var fileExtension = [
+                'jpg', 'jpeg', 'png', 'gif', 'pdf', 'doc', 'docx', 'txt', 'odt', 'rtf', 'xls', 'xlsx', 'ai', 'eps'
+            ];
+            var arquivos = $("#File")[0].files;
+            $.map(arquivos, function (val) {
+                if ($.inArray(val.name.split('.').pop().toLowerCase(), fileExtension) == -1) {
+                    swal('Oops...', 'São permitidos apenas os formatos: ' + fileExtension.join(', '), 'error');
+                    $("#File").val('');
+                }
+            });
+        });
+    </script>
+}

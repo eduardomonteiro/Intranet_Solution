@@ -1,0 +1,228 @@
+﻿@using Intranet.Data.Entities
+@using Intranet.Data.Enums
+@model Comunicado
+<section class="content-noticias">
+    <div class="info-interna">
+        <p style="font-size: 12px; margin-bottom: 20px;">Os campos assinalados com * são de preenchimento obrigatório</p>
+        <form class="formulario-base" method="post" action="@Url.Action("Novo", "Comunicados")" enctype="multipart/form-data">
+            <div class="container">
+                <div class="row">
+                    <div class="col l2 m4 s12 text-right">
+                        @Html.LabelFor(m => m.Titulo)
+                    </div>
+                    <div class="col l10 m8 s12">
+                        @Html.TextBoxFor(m => m.Titulo)
+                        @Html.ValidationMessageFor(m => m.Titulo)
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col l2 m4 s12 text-right">
+                        @Html.LabelFor(m => m.Tipo)
+                    </div>
+                    <div class="col l10 m8 s12">
+                        @Html.DropDownListFor(m => m.Tipo, EnumHelper.GetSelectList(typeof(TipoComunicado)), "Selecione")
+                        @Html.ValidationMessageFor(m => m.Tipo)
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col l2 m4 s12 text-right">
+                        @Html.LabelFor(m => m.Data)
+                    </div>
+                    <div class="col l10 m8 s12">
+                        @Html.TextBoxFor(m => m.Data, new { type = "text", @class = "data" })
+                        @Html.ValidationMessageFor(m => m.Data)
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col l2 m4 s12 text-right">
+                        @Html.LabelFor(m => m.Imagem)
+                    </div>
+                    <div class="col l10 m8 s12">
+                        <input type="file" name="foto" id="foto" value="" accept=".jpg,.jpeg,.png,.gif">
+                        @Html.ValidationMessageFor(m => m.Imagem)
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col l2 m4 s12 text-right">
+                        <label for="comu-anexos">
+                            Anexos
+                        </label>
+                    </div>
+                    <div class="col l10 m8 s12">
+                        <input type="file" name="arquivos" id="arquivos" value="" multiple="multiple" accept=".jpg,.jpeg,.png,.gif,.pdf,.doc,.docx,.txt,.odt,.rtf,.xls,.xlsx,.ai,.eps" />
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col l2 m4 s12 text-right">
+                        @Html.LabelFor(m => m.Texto)
+                    </div>
+                    <div class="col l10 m8 s12">
+                        @Html.TextAreaFor(m => m.Texto)
+                        @Html.ValidationMessageFor(m => m.Texto)
+                    </div>
+                </div>
+                <!-- Destaque -->
+                <div class="row">
+                    <div class="col l2 m4 s12 text-right">
+                        <label for="Destaque">
+                            Destaque
+                        </label>
+                    </div>
+                    <div class="col l10 m8 s12">
+                        <div class="list-check">
+                            <div class="col l6 m12 s12">
+                                <div class="item">
+                                    <label for="Destaque">
+                                        @Html.CheckBoxFor(m => m.Destaque) DEFINIR COMO DESTAQUE NA TELA INICIAL
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                   <div class="col l2 m4 s12 text-right">
+                        <label for="Shoppings">
+                            Shoppings
+                        </label>
+                    </div>
+                    <div class="col l10 m8 s12">
+                        <div class="list-check">
+                            @foreach (Empreendimento empreendimento in ViewBag.Empreendimentos)
+                            {
+                                <div class="col l4 m12 s12">
+                                    <div class="item" style="min-height: 73px;">
+                                        <label>
+                                            <input type="checkbox" name="shoppings[]" value="@empreendimento.Id"> @empreendimento.Nome
+                                        </label>
+                                    </div>
+                                </div>
+                            }
+                        </div>
+                    </div>
+                </div>
+                @*<div class="row">
+                    <div class="col l2 m4 s12 text-right">
+                        <label>
+                            Sexo
+                        </label>
+                    </div>
+                    <div class="col l10 m8 s12">
+                        <div class="list-check radio">
+                            <div class="col l4 m12 s12">
+                                <div class="item">
+                                    <label for="sexM">
+                                        <input type="radio" name="sexo[]" id="sexM" value="Masculino"> Masculino
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="col l4 m12 s12">
+                                <div class="item">
+                                    <label for="sexF">
+                                        <input type="radio" name="sexo[]" id="sexF" value="Feminino"> Feminino
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>*@
+                <div class="row">
+                    <div class="col l2 m4 s12 text-right">
+                        <label for="comu-destaque">
+                            Cargos
+                        </label>
+                    </div>
+                    <div class="col l10 m8 s12">
+                        <div class="list-check">
+                            <div class="col l4 m12 s12">
+                                <div class="item">
+                                    <label for="cargo1">
+                                        <input type="checkbox" name="cargo[]" id="cargo1" value="Cargo 1"> Cargo 1
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="col l4 m12 s12">
+                                <div class="item">
+                                    <label for="cargo2">
+                                        <input type="checkbox" name="cargo[]" id="cargo2" value="Cargo 2"> Cargo 2
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="col l4 m12 s12">
+                                <div class="item">
+                                    <label for="cargo3">
+                                        <input type="checkbox" name="cargo[]" id="cargo3" value="Cargo 3"> Cargo 3
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="col l4 m12 s12">
+                                <div class="item">
+                                    <label for="cargo4">
+                                        <input type="checkbox" name="cargo[]" id="cargo4" value="Cargo 4"> Cargo 4
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="col l4 m12 s12">
+                                <div class="item">
+                                    <label for="cargo5">
+                                        <input type="checkbox" name="cargo[]" id="cargo5" value="Cargo 5"> Cargo 5
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="col l4 m12 s12">
+                                <div class="item">
+                                    <label for="cargo6">
+                                        <input type="checkbox" name="cargo[]" id="cargo6" value="Cargo 6"> Cargo 6
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="list-botoes">
+                    <button class="btn-form red" type="submit">
+                        <i class="fa fa-floppy-o" aria-hidden="true"></i>Salvar
+                    </button>
+                    <button class="btn-form" onclick="history.back();">
+                        <i class="fa fa-times" aria-hidden="true"></i>Cancelar
+                    </button>
+                </div>
+            </div>
+        </form>
+    </div>
+</section>
+
+@section scripts
+{
+    <script type="text/javascript" src="~/libs/ckeditor/ckeditor.js"></script>
+    <script type="text/javascript" src="~/libs/ckeditor/sample.js"></script>
+    <script>
+        initSample("Texto");
+
+        $("#foto").change(function () {
+            var fileExtension = [
+                'jpg', 'jpeg', 'png', 'gif'
+            ];
+            var arquivos = $("#foto")[0].files;
+            $.map(arquivos, function (val) {
+                if ($.inArray(val.name.split('.').pop().toLowerCase(), fileExtension) == -1) {
+                    swal('Oops...', 'São permitidos apenas os formatos: ' + fileExtension.join(', '), 'error');
+                    $("#foto").val('');
+                }
+            });
+        });
+
+        $("#arquivos").change(function () {
+            var fileExtension = [
+                'jpg', 'jpeg', 'png', 'gif', 'pdf', 'doc', 'docx', 'txt', 'odt', 'rtf', 'xls', 'xlsx', 'ai', 'eps'
+            ];
+            var arquivos = $("#arquivos")[0].files;
+            $.map(arquivos, function (val) {
+                if ($.inArray(val.name.split('.').pop().toLowerCase(), fileExtension) == -1) {
+                    swal('Oops...', 'São permitidos apenas os formatos: ' + fileExtension.join(', '), 'error');
+                    $("#arquivos").val('');
+                }
+            });
+        });
+    </script>
+}

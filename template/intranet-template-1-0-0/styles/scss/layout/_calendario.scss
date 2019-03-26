@@ -1,0 +1,78 @@
+.ilustracao-calendario{
+	margin-top: 20px;
+	p{
+		font-size: 12px;
+		font-weight: 500;
+		display: -webkit-flex;
+		display: -moz-flex;
+		display: -ms-flex;
+		display: -o-flex;
+		display: flex;
+		align-items: center;
+		text-transform: uppercase;
+		&:before {
+			content: '';
+			display: block;
+			width: 10px;
+			height: 10px;
+			border-radius: 50%;
+			background: #000;
+			flex-shrink: 0;
+			margin-right: 5px;
+		}
+		&.azul {
+			color: #2f1bed;
+			&:before {
+				background: #2f1bed;
+			}
+		}
+		&.vermelho {
+			color: #ea2755;
+			&:before {
+				background: #ea2755;
+			}
+		}
+		&.laranja {
+			color: #ed6f1b;
+			&:before {
+				background: #ed6f1b;
+			}
+		}
+		&.amarelo {
+			color: #edd21b;
+			&:before {
+				background: #edd21b;
+			}
+		}
+		&.roxo {
+			color: #cd1bed;
+			&:before {
+				background: #cd1bed;
+			}
+		}
+		&.verde {
+			color: #5bed1b;
+			&:before {
+				background: #5bed1b;
+			}
+		}
+		&.azulclaro {
+			color: #1bd2ed;
+			&:before {
+				background: #1bd2ed;
+			}
+		}
+	}
+}
+
+@media (max-width: 640px){
+	.dhx_cal_header, .dhx_cal_data {
+		margin-top: 60px;
+	}
+	.dhx_cal_prev_button, .dhx_cal_next_button, .dhx_cal_today_button {
+		display: none;
+	}
+	.dhx_cal_navline .dhx_cal_date {
+		top: 60px;
+	}
+}

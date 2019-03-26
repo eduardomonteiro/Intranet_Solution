@@ -1,0 +1,82 @@
+﻿@model IEnumerable<$safeprojectname$.Models.ApplicationUser>
+@if (!Model.Any())
+{
+    <p>Nenhum colaborador encontrado.</p>
+}
+else
+{
+    <p>Total de @Model.Count() colaboradores</p>
+
+    <div class="list-colaboradores">
+        @foreach (var usuario in Model)
+        {
+            <div class="item @if (DateTime.Now.Date == usuario.DataNascimento.Date){ <text>niver</text> }">
+                <div class="fotoperfil">
+                    @if (!string.IsNullOrEmpty(usuario.Avatar))
+                    {
+                        <img src="~/Content/Colaboradores/@usuario.Avatar" alt="">
+                    }
+                    else
+                    {
+                        <img src="~/Content/Colaboradores/padrao.jpg" alt="">
+                    }
+                </div>
+                <div class="info">
+                    <p class="title">@usuario.Nome</p>
+                    <p class="subtit">@usuario.Cargo</p>
+                    <div class="in2">
+                        <div class="container">
+                            <div class="row">
+                                <div class="col l6 s12">
+                                    <p>
+                                        <i class="fa fa-map-marker" aria-hidden="true"></i>@usuario.Empreendimento.Nome
+                                    </p>
+                                    <p>
+                                        <i class="fa fa-envelope-o" aria-hidden="true"></i>@usuario.Email
+                                    </p>
+                                    @*<p>
+                                        <i class="fa fa-venus-mars" aria-hidden="true"></i>@usuario.Sexo
+                                    </p>*@
+                                </div>
+                                <div class="col l3 s12">
+                                    <p>
+                                        <i class="fa fa-phone-square" aria-hidden="true"></i>@usuario.Telefone
+                                    </p>
+                                    <p class="birthday">
+                                        <i class="fa fa-birthday-cake" aria-hidden="true"></i>@(usuario.DataNascimento.Day < 10 ? "0" + usuario.DataNascimento.Day.ToString() : usuario.DataNascimento.Day.ToString())/@(usuario.DataNascimento.Month < 10 ? "0" + usuario.DataNascimento.Month.ToString() : usuario.DataNascimento.Month.ToString())                                    </p>
+                                </div>
+                                @if (!string.IsNullOrEmpty(usuario.Curriculo))
+                                {
+                                    <div class="col l3 s12">
+                                        <a href="~/Content/Colaboradores/@usuario.Curriculo" target="_blank">
+                                            <div class="buttoncolor">
+                                                <i class="fa fa-user" aria-hidden="true"></i>ver currículo
+                                            </div>
+                                        </a>
+                                    </div>
+                                }
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                @if (User.IsInRole("Colaboradores-Admin"))
+                {
+                    <div class="edits">
+                        <div class="icon-edits"></div>
+                        <div class="subedit">
+                            <div class="btnEditar" data-link="@Url.Action("Editar", "Colaboradores", new {usuario.Id})">
+                                <i class="fa fa-pencil-square-o" aria-hidden="true"></i>Editar
+                            </div>
+                            <div class="
+                                 btnExcluir" data-link="@Url.Action("Excluir", "Colaboradores", new {usuario.Id})">
+                                <i class="fa fa-trash-o" aria-hidden="true"></i>Excluir
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
+        }
+    </div>
+    <div class="btn-carregarmais"><img src="~/images/btn-carregarmais.png" alt="">
+    </div>
+}

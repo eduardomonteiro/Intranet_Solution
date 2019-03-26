@@ -1,0 +1,42 @@
+﻿<a href="@Url.Action("Novo", "Contato", new { tipo = ViewBag.Tipo })"><div class="buttoncolor btn-newlink"><i class="fa fa-plus-square" aria-hidden="true"></i>Nova mensagem</div></a>
+<section class="content-falecomrh">
+    <p>@ViewBag.Texto</p>
+    <div class="mobile-filter buttoncolor"><i class="fa fa-filter" aria-hidden="true"></i> Filtrar</div>
+    <div class="bloco-filter">
+        <div class="filter-area">
+            <button class="active" data-fale="todos" id="btnTodos">Todos</button>
+            <button data-fale="todos" id="btnAbertos">Abertos</button>
+            <button data-fale="todos" id="btnFinalizados">Finalizados</button>
+        </div>
+        <div class="filters">
+            <div class="container">
+                <form action="/" method="post" id="frmBuscaContato">
+                    <div class="row">
+                        <div class="col m8 s12">
+                            <label for="">&nbsp</label>
+                            <input type="text" placeholder="Palavra-chave" name="Busca" id="palavrachave">
+                        </div>
+                        <div class="col m3 s12">
+                            <label for="">Empreendimento</label>
+                            @Html.DropDownList("Empreendimento", new SelectList(ViewBag.Empreendimentos, "Id", "Nome"), "Selecione")
+                        </div>
+                        <div class="col m1 s12">
+                            <label for="">&nbsp</label>
+                            <button type="submit">
+                                <i class="fa fa-search" aria-hidden="true"></i>
+                            </button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <div id="divContato" style="min-height: 400px;"></div>
+</section>
+@section scripts
+    {
+    <script src="~/js/contato.js"></script>
+    <script>
+        contato.init('@ViewBag.Tipo');
+    </script>
+}
