@@ -1,0 +1,79 @@
+﻿@model Intranet.Data.Entities.Album
+<section class="content-internas">
+    <div class="info-interna">
+        <form class="formulario-base" method="post" action="@Url.Action("Editar", "Albuns")" enctype="multipart/form-data">
+            @Html.HiddenFor(m => m.Id)
+            @Html.HiddenFor(m => m.Capa)
+            <div class="container">
+                <div class="row">
+                    <div class="col l3 m4 s12">
+                        @Html.LabelFor(m => m.Titulo)
+                    </div>
+                    <div class="col l9 m8 s12">
+                        @Html.TextBoxFor(m => m.Titulo)
+                        @Html.ValidationMessageFor(m => m.Titulo)
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col l3 m4 s12">
+                        @Html.LabelFor(m => m.IdEmpreendimento)
+                    </div>
+                    <div class="col l9 m8 s12">
+                        @if (User.IsInRole("Albuns-Localidade"))
+                        {
+                            <div class="col l9 m8 s12">
+                                @Html.HiddenFor(m => m.IdEmpreendimento)
+                                <p class="red">@Model.Empreendimento.Nome</p>
+                            </div>
+                        }
+                        else
+                        {
+
+                            @Html.DropDownListFor(m => m.IdEmpreendimento, new SelectList(ViewBag.Empreendimentos, "Id", "Nome"), "Selecione")
+                            @Html.ValidationMessageFor(m => m.IdEmpreendimento)
+
+                        }
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col l3 m4 s12">
+                        @Html.LabelFor(m => m.Capa)
+                    </div>
+                    <div class="col l9 m8 s12">
+                        @if (!string.IsNullOrEmpty(Model.Capa))
+                        {
+                            <div class="legenda"><strong>Atual:</strong> <a target="_blank" href="/Content/Albuns/@Model.Capa">@Model.Capa</a></div>
+                        }
+                        <input type="file" name="Foto" id="Foto" value="" accept=".jpg,.jpeg,.png,.gif,.ai,.eps" />
+                        @Html.ValidationMessageFor(m => m.Capa)
+                    </div>
+                </div>
+                <div class="list-botoes">
+                    <button class="btn-form red" type="submit">
+                        <i class="fa fa-floppy-o" aria-hidden="true"></i>Salvar
+                    </button>
+                    <button class="btn-form" type="reset">
+                        <i class="fa fa-times" aria-hidden="true"></i>Cancelar
+                    </button>
+                </div>
+            </div>
+        </form>
+    </div>
+</section>
+
+@section scripts{
+    <script>
+        $("#Foto").change(function () {
+            var fileExtension = [
+                'jpg', 'jpeg', 'png', 'gif', 'ai', 'eps'
+            ];
+            var arquivos = $("#Foto")[0].files;
+            $.map(arquivos, function (val) {
+                if ($.inArray(val.name.split('.').pop().toLowerCase(), fileExtension) == -1) {
+                    swal('Oops...', 'São permitidos apenas os formatos: ' + fileExtension.join(', '), 'error');
+                    $("#Foto").val('');
+                }
+            });
+        });
+    </script>
+}

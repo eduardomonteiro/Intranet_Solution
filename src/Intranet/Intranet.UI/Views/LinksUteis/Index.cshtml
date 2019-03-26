@@ -1,0 +1,40 @@
+﻿@if (User.IsInRole("LinksUteis-Admin"))
+{
+    <a href="@Url.Action("Novo", "LinksUteis")"><div class="buttoncolor btn-newlink"><i class="fa fa-plus-square" aria-hidden="true"></i>Novo link</div></a>    
+}
+
+<section class="content-linksuteis">
+    <div class="mobile-filter buttoncolor"><i class="fa fa-filter" aria-hidden="true"></i> Filtrar</div>
+    <div class="bloco-filter">
+        <div class="filters">
+            <div class="container">
+                <form action="/" method="post" id="frmBuscaLinks">
+                    <div class="row">
+                        <div class="col m8 s12">
+                            <label for="">&nbsp</label>
+                            <input type="text" name="Busca" id="palavrachave" placeholder="Palavra-chave">
+                        </div>
+                        <div class="col m3 s12">
+                            <label for="">Empreendimento</label>
+                            @Html.DropDownList("Empreendimento", new SelectList(ViewBag.Empreendimentos, "Id", "Nome", Request["Empreendimento"]), "Selecione")
+                        </div>
+                        <div class="col m1 s12">
+                            <label for="">&nbsp</label>
+                            <button type="submit">
+                                <i class="fa fa-search" aria-hidden="true"></i>
+                            </button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <div id="divLinks" style="min-height: 450px;">
+    </div>
+</section>
+@section scripts{
+    <script src="~/js/linksUteis.js"></script>
+    <script>
+        linksUteis.init();
+    </script>
+}

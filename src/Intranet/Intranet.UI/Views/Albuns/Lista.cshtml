@@ -1,0 +1,44 @@
+﻿@model IEnumerable<Intranet.Data.Entities.Album>
+
+@if (!Model.Any())
+{
+    <p>Nenhum álbum encontrado.</p>
+}
+else
+{
+    <p>Total de @Model.Count() álbuns</p>
+    <div class="list-noticias">
+        <div class="container">
+            <div class="row">
+                @foreach (var album in Model)
+                {
+                    <div class="col l3 m6 s12">
+                        <article class="image" style="background-image: url('/Content/Albuns/@album.Capa')">
+                            <div class="edits">
+                                <div class="icon-edits"></div>
+                                <div class="subedit">
+                                    <div class="btnEditar" data-link="@Url.Action("Editar", "Albuns", new {album.Id})">
+                                        <i class="fa fa-pencil-square-o" aria-hidden="true"></i>Editar
+                                    </div>
+                                    <div class="btnExcluir" data-link="@Url.Action("Excluir", "Albuns", new {album.Id})">
+                                        <i class="fa fa-trash-o" aria-hidden="true"></i>Excluir
+                                    </div>
+                                </div>
+                            </div>
+                            <a href="@Url.Action("Fotos", "Albuns", new { id=album.Id})">
+                                <div class="info">
+                                    <p class="title">@album.Titulo</p>
+                                    <p class="txtcategory">@album.Empreendimento.Nome<br>@album.Fotos.Count() Fotos
+                                    </p>
+                                </div>
+                            </a>
+                        </article>
+                    </div>
+                }
+
+            </div>
+        </div>
+    </div>
+    <div class="btn-carregarmais"><img src="~/images/btn-carregarmais.png" alt="">
+    </div>
+}
