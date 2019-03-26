@@ -1,0 +1,66 @@
+﻿@model IEnumerable<Intranet.Data.Entities.Contato>
+@if (!Model.Any())
+{
+    <p>Nenhuma mensagem encontrada</p>
+}
+else
+{
+    <p>Total de @Model.Count() mensagens</p>
+    <div class="list-fale">
+        <ul>
+            <li data-fale="todos">
+                @*<p class="date"><strong>HOJE</strong>, 20 de Outubro de 2017</p>*@
+                @foreach (var contato in Model)
+                {
+                    <div class="item @if (contato.Finalizado){<text>finalizado</text>} ">
+                        <div class="container">
+                            <a href="@Url.Action("Interacao", "Contato", new {tipo = contato.Tipo, id= contato.Id})">
+                                <div class="row">
+                                    <div class="col m1 s12">
+                                        @if (!string.IsNullOrEmpty(contato.Usuario.Avatar) && !contato.Anonimo)
+                                        {
+                                            <img src="~/Content/Colaboradores/@contato.Usuario.Avatar" alt="@contato.Usuario.Nome">
+                                        }
+                                        else
+                                        {
+                                            <img src="~/Content/Colaboradores/padrao.jpg" alt="@contato.Usuario.Nome">
+                                        }
+                                    </div>
+                                    <div class="col m5 s12">
+                                        <p class="title">@contato.Assunto</p>
+                                        @if (!contato.Anonimo)
+                                        {
+                                            <p class="subtit">@contato.Usuario.Nome</p>
+                                        }
+                                        else if (contato.Anonimo)
+                                        {
+                                            <p class="subtit">Anonimo</p>
+                                        }
+                                    </div>
+                                    <div class="col m2 s12">
+                                        @if (contato.Finalizado)
+                                        {
+                                            <p class="status">finalizado</p>
+
+                                        }
+                                        else
+                                        {
+                                            <p class="status">aberto</p>
+                                        }
+                                    </div>
+                                    <div class="col m3 s12">
+                                        <p class="ticket">
+                                            ID TICKET <strong>#@contato.Ticket</strong>
+                                        </p>
+                                        <p class="criado">Criado em @contato.DataCriacao.ToShortDateString(), às @contato.DataCriacao.ToShortTimeString()</p>
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+                }
+            </li>
+        </ul>
+    </div>
+    <div class="btn-carregarmais"><img src="~/images/btn-carregarmais.png" alt=""></div>
+}

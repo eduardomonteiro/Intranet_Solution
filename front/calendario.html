@@ -1,0 +1,361 @@
+<!-- Desenvolvimento Front: Romero Almeida -->
+<!doctype html>
+<html xml:lang="pt-br" lang="pt-br">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <title>Calendario - Partage | Intranet</title>
+    <meta name="author" content="AM4 - A Internet de Resultados" />
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <link rel="apple-touch-icon" href="apple-touch-icon.png">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.6.0/slick-theme.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.6.0/slick.css" />
+    <link rel="stylesheet" href="libs/ckeditor/samples.css">
+    <link rel="stylesheet" href="libs/dhtmlxScheduler/dhtmlxscheduler.css">
+     
+    <link rel="stylesheet" href="styles/styles.css">
+    
+    <style type="text/css" >
+
+
+                
+                
+       
+
+        .dhx_cal_event.event_psp div, .dhx_cal_event_line.event_psp{
+            background-color: #2f1bed !important;
+            border-color: #2f1bed !important;
+        }
+        .dhx_cal_event.event_pssg div, .dhx_cal_event_line.event_pssg{
+            background-color: #ea2755 !important;
+            border-color: #ea2755 !important;
+        }
+        .dhx_cal_event.event_pscg div, .dhx_cal_event_line.event_pscg{
+            background-color: #ed6f1b !important;
+            border-color: #ed6f1b !important;
+        }
+        .dhx_cal_event.event_pnsn div, .dhx_cal_event_line.event_pnsn{
+            background-color: #edd21b !important;
+            border-color: #edd21b !important;
+        }
+        .dhx_cal_event.event_psrg div, .dhx_cal_event_line.event_psrg{
+            background-color: #cd1bed !important;
+            border-color: #cd1bed !important;
+        }
+        .dhx_cal_event.event_psb div, .dhx_cal_event_line.event_psb{
+            background-color: #5bed1b !important;
+            border-color: #5bed1b !important;
+        }
+        .dhx_cal_event.event_psbm div, .dhx_cal_event_line.event_psbm{
+            background-color: #1bd2ed !important;
+            border-color: #1bd2ed !important;
+        }
+
+    </style>
+
+    
+
+</head>
+
+<body onload="init();">
+    <div class="wrapper">
+        <!-- Menu Lateral -->
+        <aside class="wrap-side">
+            <div class="btn-submenu"><i class="fa fa-bars" aria-hidden="true"></i></div>
+            <div class="logo">
+                <a href="index.html"><img src="../images/logo.png" alt=""></a>
+            </div>
+            
+            <div class="menu">
+                <ul class="list-menu">
+                    <li>
+                        <a href="index.html"><div class="item"><i class="fa fa-home" aria-hidden="true"></i>Início</div></a>
+                    </li>
+                    <li>
+                        <div class="item submenu"><div class="fa"><img src="../images/ico-institucional-menu.png" alt=""></div>Intitucional</div>
+                        <div class="sub-itens">
+                            <a href="conhecaaholding.html">Conheça a Holding</a>
+                            <a href="">Estrutura Organizacional</a>
+                            <a href="diretoria.html">Diretoria Partage</a>
+                            <a href="">Gestores</a>
+                            <a href="normaseprocedimentos.html">Normas e Procedimentos</a>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="item submenu"><i class="fa fa-users" aria-hidden="true"></i>Gente e Gestão</div>
+                        <div class="sub-itens">
+                            <a href="">Espaço RH</a>
+                            <a href="educacaocontinuada.html">Educação Continuada</a>
+                            <a href="colaboradores.html">Colaboradores</a>
+                            <a href="linksuteis.html">Links Úteis</a>
+                            <a href="falecomrh.html">Fale com o RH</a>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="item submenu"><i class="fa fa-suitcase" aria-hidden="true"></i>Comercial</div>
+                        <div class="sub-itens">
+                            <a href="">Instrumentos Contratuais</a>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="item submenu"><i class="fa fa-file-image-o" aria-hidden="true"></i>Marketing</div>
+                        <div class="sub-itens">
+                            <a href="">Manual da Marca</a>
+                            <a href="album.html">Fotos dos Shoppings</a>
+                            <a href="">Apresentações</a>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="item submenu"><i class="fa fa-desktop" aria-hidden="true"></i> Sistemas Internos</div>
+                        <div class="sub-itens">
+                            <a href="">ERP Holding</a>
+                            <a href="">ERP Shoppings</a>
+                            <a href="">Viagens</a>
+                            <a href="">BI</a>
+                            <a href="">Gestão de Métodos e Desempenho</a>
+                            <a href="">Wise IT</a>
+                            <a href="">Help Desk</a>
+                            <a href="">Portal RH</a>
+                        </div>
+                    </li>
+                    <li>
+                        <a href=""><div class="item"><i class="fa fa-commenting-o" aria-hidden="true"></i>Comunicados</div></a>
+                    </li>
+                    <li>
+                        <a href="noticias.html"><div class="item"><i class="fa fa-newspaper-o" aria-hidden="true"></i>Notícias</div></a>
+                    </li>
+                    <li>
+                        <a href="calendario.html"><div class="item"><i class="fa fa-calendar" aria-hidden="true"></i>Calendário</div></a>
+                    </li>
+                    <li>
+                        <a href=""><div class="item"><i class="fa fa-comments-o" aria-hidden="true"></i>Ouvidoria</div></a>
+                    </li>
+                    <li>
+                        <div class="item submenu"><i class="fa fa-cog" aria-hidden="true"></i>Gestão do Sistema</div>
+                        <div class="sub-itens">
+                            <a href="gerenciarperfis.html">Gerenciar Perfis</a>
+                            <a href="gerenciar-usuarios.html">Gerenciar Usuários</a>
+                            <a href="">Log de Acesso</a>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </aside>
+        
+        <!-- Conteudo geral -->  
+        <div class="content-wrapper">
+            <!-- topo / buscar e perfil -->  
+            <header>
+                <div class="search">
+                    <input type="text" placeholder="Digite aqui sua pesquisa" id="field-search">
+                </div>
+                <div class="box">
+                    <div class="info-ouvidoria">
+                        <a href="ouvidoria.html">
+                        <img src="../images/icon-ouvidoria.png" alt="">
+                        <p>Ouvidoria</p>
+                        </a>
+                    </div>  
+                </div>
+                <div class="box">
+                    <div class="perfil">
+                        <img src="../images/fotoperfil.png" alt="">
+                        <div class="arrow"><i class="fa fa-angle-down" aria-hidden="true"></i></div>
+                    </div>
+                    <div class="box-userperfil">
+                        <p class="title">Lara Almeida</p>
+                        <p class="subtit">Nome do Shopping <small>Setor</small></p>
+                        <a href="meuperfil.html"><button class="buttoncolor">meu perfil</button></a>
+                        <button class="buttoncolor">sair</button>
+                    </div>
+                </div>
+            </header>
+            
+            <!-- Conteudo da pagina --> 
+            <div class="content-inside">
+                <!-- titulo da pagina -->  
+                <div class="top-inside">
+                    <div class="btn-back"><i class="fa fa-angle-left" aria-hidden="true"></i></div>
+                    <div class="info">
+                        <p class="title">Calendario</p>
+                        <div class="breadcrumb"><a href="">Home</a><a href="">Interna</a><a href=""><span>Página</span></a></div>
+                    </div>
+                </div>
+
+                
+                
+                <!-- Conteudo -->  
+                <section class="content-internas">
+                    <div class="filters">
+                        <div class="container">
+                            <div class="row">
+                                <div class="col m2 s12">
+                                    <label for="">Empreendimento</label>
+                                    <select name="" id="">
+                                        <option value="">Selecione</option>
+                                    </select>
+                                </div>
+                                <div class="col m1 s12">
+                                    <label for="">&nbsp</label>
+                                    <button><i class="fa fa-search" aria-hidden="true"></i>
+                                    </button>
+                                </div>
+                                <div class="col m3 s12">
+                                    <div class="ilustracao-calendario">
+                                        <p class="azul">partage shopping parauapébas</p>
+                                        <p class="vermelho">Partage Shopping São Gonçalo</p>
+                                        <p class="laranja">Partage Shopping Campina grande</p>
+                                    </div>
+                                </div>
+                                <div class="col m3 s12">
+                                    <div class="ilustracao-calendario">
+                                        <p class="amarelo">Partage Norte Shopping Natal</p>
+                                        <p class="roxo">Partage Shopping Rio grande</p>
+                                    </div>
+                                </div>
+                                <div class="col m3 s12">
+                                    <div class="ilustracao-calendario">
+                                        <p class="verde">Partage Shopping Betim</p>
+                                        <p class="azulclaro">Partage Shopping Mossoró</p>
+                                        
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="info-interna" style="height: 600px;">
+                        <div id="scheduler_here" class="dhx_cal_container" style='width:100%; height:100%;'>
+                            <div class="dhx_cal_navline">
+                                <div class="dhx_cal_prev_button">&nbsp;</div>
+                                <div class="dhx_cal_next_button">&nbsp;</div>
+                                <div class="dhx_cal_today_button"></div>
+                                <div class="dhx_cal_date"></div>
+                                <div class="dhx_cal_tab" name="day_tab" style="right:204px;"></div>
+                                <div class="dhx_cal_tab" name="week_tab" style="right:140px;"></div>
+                                <div class="dhx_cal_tab" name="month_tab" style="right:76px;"></div>
+                            </div>
+                            <div class="dhx_cal_header">
+                            </div>
+                            <div class="dhx_cal_data">
+                            </div>      
+                        </div>
+                        
+
+                    </div>
+                </section>
+            </div>
+
+            <!-- Rodape -->  
+            <footer>
+                <div class="redes">
+                    <a href=""><i class="fa fa-facebook" aria-hidden="true"></i></a>
+                    <a href=""><i class="fa fa-youtube" aria-hidden="true"></i></a>
+                    <a href=""><i class="fa fa-twitter" aria-hidden="true"></i></a>
+                    <a href=""><i class="fa fa-flickr" aria-hidden="true"></i></a>
+                </div>
+                <a href="http://www.am4.com.br" target="_blank"><img src="../images/am4.png" alt="" class="am4"></a>
+            </footer>  
+        </div>
+    </div>   
+</body>
+
+</html>
+
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.6.0/slick.min.js"></script>
+<script type="text/javascript" src="js/materialize.min.js"></script>
+<script type="text/javascript" src="js/main.js"></script>
+<script type="text/javascript" src="libs/dhtmlxScheduler/dhtmlxscheduler.js"></script>
+
+<script type="text/javascript" charset="utf-8">
+
+        function init() {
+            scheduler.config.xml_date="%Y-%m-%d %H:%i";
+            scheduler.config.time_step = 30;
+            scheduler.config.multi_day = true;
+            scheduler.locale.labels.section_subject = "Subject";
+            scheduler.config.first_hour = 6;
+            scheduler.config.limit_time_select = true;
+            scheduler.config.details_on_dblclick = true;
+            scheduler.config.details_on_create = true;
+
+            scheduler.templates.event_class=function(start, end, event){
+                var css = "";
+
+                if(event.subject) // if event has subject property then special class should be assigned
+                    css += "event_"+event.subject;
+
+                if(event.id == scheduler.getState().select_id){
+                    css += " selected";
+                }
+                return css; // default return
+
+              
+            };
+            scheduler.locale={
+            date:{
+                month_full:["janeiro", "Fevereiro", "Março", "Abril", "Maio", "Junho", "Julho",
+                "Agosto", "Setembro", "Outubro", "Novembro", "Dezembro"],
+                month_short:["Jan", "Fev", "Mar", "Abr", "Mai", "Jun", "Jul", "Ago", "Set", "Out", "Nov", "Dez"],
+                day_full:["Domingo", "Segunda-feira", "Ter&ccedil;a-feira", "Quarta-feira", "Quinta-feira", "Sexta-feira", "S&aacute;bado"],
+                day_short:["D", "S", "T", "Q", "Q", "S", "S"]
+            },
+            labels:{
+                dhx_cal_today_button:"Hoje",
+                day_tab:"Dia",
+                week_tab:"Semana",
+                month_tab:"Mês",
+                new_event:"Novo Evento",
+                icon_save:"Salvar",
+                icon_cancel:"Cancelar",
+                icon_details:"Detalhes",
+                icon_edit:"Editar",
+                icon_delete:"Deletar",
+                confirm_closing:"", //Your changes will be lost, are you sure?
+                confirm_deleting:"O evento será excluído permanentemente, você tem certeza?",
+                section_description:"Descrição",
+                section_time:"Período de tempo"
+            }
+        }
+
+
+            var subject = [
+                { key: 'psp', label: 'Partage Shopping Parauapébas' },
+                { key: 'pssg', label: 'Partage Shopping São Gonçalo' },
+                { key: 'pscg', label: 'Partage Shopping Campina Grande' },
+                { key: 'pnsn', label: 'Partage Norte Shopping Natal' },
+                { key: 'psrg', label: 'Partage Shopping Rio Grande' },
+                { key: 'psb', label: 'Partage Shopping Betim' },
+                { key: 'psbm', label: 'Partage Shopping Mossoró' }
+            ];
+
+            scheduler.config.lightbox.sections=[
+                {name:"Titulo", height:43, map_to:"text", type:"textarea" , focus:true},
+                {name:"Descrição", height:43, map_to:"save", type:"textarea" , focus:true},
+
+                {name:"Shoppings", height:40, type:"select", options: subject, map_to:"subject" },
+                {name:"time", height:72, type:"time", map_to:"auto" },
+                
+            ];
+
+         scheduler.init('scheduler_here', new Date(2017, 3, 20), "week");
+
+			scheduler.parse([
+				{ start_date: "2017-04-18 09:00", end_date: "2017-04-18 12:00", text:"English lesson", subject: 'pssg' },
+				{ start_date: "2017-04-20 10:00", end_date: "2017-04-21 16:00", text:"Math exam", subject: 'pscg' },
+				{ start_date: "2017-04-21 10:00", end_date: "2017-04-21 14:00", text:"Science lesson", subject: 'psbm' },
+				{ start_date: "2017-04-23 16:00", end_date: "2017-04-23 17:00", text:"English lesson", subject: 'pssg' },
+				{ start_date: "2017-04-22 09:00", end_date: "2017-04-22 17:00", text:"Usual event" }
+			], "json");
+
+
+            
+
+        }
+    </script>
+
+

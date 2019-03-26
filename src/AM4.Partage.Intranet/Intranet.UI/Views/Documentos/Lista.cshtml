@@ -1,0 +1,51 @@
+﻿@using Intranet.UI.Util
+@model IEnumerable<Intranet.Data.Entities.Documento>
+
+@if (!Model.Any())
+{
+    <p>Nenhum documento encontrado.</p>
+}
+else
+{
+    <p>Total de @Model.Count() documentos</p>
+    <div class="list-arquivos">
+        <div class="container">
+            <div class="row">
+                @foreach (var documento in Model)
+                {
+                    <div class="col l3 m6 s12">
+                        <div class="item" alt="@documento.Nome" title="@documento.Nome">
+                            @if (User.IsInRole(ViewBag.Tipo + "-Admin"))
+                            {
+                                <div class="edits">
+                                    <div class="icon-edits"></div>
+                                    <div class="subedit">
+                                        <div class="btnEditar" data-link="@Url.Action("Editar", "Documentos", new { documento.Id, documento.Tipo })">
+                                            <i class="fa fa-pencil-square-o" aria-hidden="true"></i>Editar
+                                        </div>
+                                        <div class="btnExcluir" data-link="@Url.Action("Excluir", "Documentos", new {documento.Id})">
+                                            <i class="fa fa-trash-o" aria-hidden="true"></i>Excluir
+                                        </div>
+                                    </div>
+                                </div>
+                            }
+                            <div class="topo">
+                                @Html.IconeArquivo(documento.Arquivo)
+                                <p>@Html.TamanhoDocumento(documento.Arquivo)</p>
+                            </div>
+                            <div class="info">
+                                <p>@documento.Data.ToString("dd 'de' MMMM 'de' yyyy")</p>
+                                <p class="title">@(documento.Nome.Length > 53 ? documento.Nome.Substring(0, 50) + "..." : documento.Nome)</p>
+                                <p>@documento.Empreendimento.Nome</p>
+                                <a href="@Url.Action("Download", new {arquivo = documento.Arquivo, tipo=documento.Tipo})"><button>download</button></a>
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+    <div class="btn-carregarmais">
+        <img src="~/images/btn-carregarmais.png" alt="">
+    </div>
+}

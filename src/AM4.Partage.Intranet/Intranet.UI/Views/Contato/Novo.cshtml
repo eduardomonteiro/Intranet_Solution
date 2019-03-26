@@ -1,0 +1,94 @@
+﻿@using Intranet.UI.Util
+@model Intranet.Data.Entities.Contato
+<section class="content-falecomrh">
+    <p>@ViewBag.Texto</p>
+    <div class="info-interna">
+        <p style="font-size: 12px; margin-bottom: 20px;">Os campos assinalados com * são de preenchimento obrigatório</p>
+        <form class="formulario-base" action="@Url.Action("Novo", "Contato")" method="post" enctype="multipart/form-data">
+            @Html.HiddenFor(m => m.IdUsuario)
+            <div class="container">
+                <div class="row">
+                    <div class="col l3 m4 s12">
+                        @Html.LabelFor(m => m.Tipo)
+                    </div>
+                    <div class="col l9 m8 s12">
+                        @Html.HiddenFor(m => m.Tipo)
+                        <p class="red">@Html.EnumDisplayNameFor(Model.Tipo)</p>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col l3 m4 s12">
+                        @Html.LabelFor(m => m.IdEmpreendimento)
+                    </div>
+                    <div class="col l9 m8 s12">
+                        @Html.HiddenFor(m => m.IdEmpreendimento)
+                        <p class="red">@Model.Empreendimento.Nome</p>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col l3 m4 s12">
+                        @Html.LabelFor(m => m.Assunto)
+                    </div>
+                    <div class="col l9 m8 s12">
+                        @Html.DropDownListFor(m => m.Assunto, (SelectList)ViewBag.Assuntos, "Selecione o assunto")
+                        @Html.ValidationMessageFor(m => m.Assunto)
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col l3 m4 s12">
+                        @Html.LabelFor(m => m.Mensagem)
+                    </div>
+                    <div class="col l9 m8 s12">
+                        @Html.TextAreaFor(m => m.Mensagem)
+                        @Html.ValidationMessageFor(m => m.Mensagem)
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col l3 m4 s12">
+                        <label>
+                            Anexos
+                        </label>
+                    </div>
+                    <div class="col l9 m8 s12">
+                        <div class="row">
+                            <input type="file" name="arquivos" id="arquivos" value="" multiple="multiple" accept=".jpg,.jpeg,.png,.gif,.pdf,.doc,.docx,.txt,.odt,.rtf,.xls,.xlsx,.ai,.eps" />
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col l3 m4 s12">
+                        @Html.LabelFor(m => m.Anonimo)
+                    </div>
+                    <div class="col l9 m8 s12">
+                        @Html.CheckBoxFor(m => m.Anonimo)
+                        @Html.ValidationMessageFor(m => m.Anonimo)
+                    </div>
+                </div>
+                <div class="list-botoes">
+                    <button class="btn-form red" type="submit">
+                        <i class="fa fa-paper-plane-o" aria-hidden="true"></i>Salvar e enviar
+                    </button>
+                    <button class="btn-form" type="reset">
+                        <i class="fa fa-times" aria-hidden="true"></i>Cancelar
+                    </button>
+                </div>
+            </div>
+        </form>
+    </div>
+</section>
+@section scripts{
+    <script>
+        $("#arquivos").change(function () {
+            var fileExtension = [
+                'jpg', 'jpeg', 'png', 'gif', 'pdf', 'doc', 'docx', 'txt', 'odt', 'rtf', 'xls', 'xlsx', 'ai', 'eps'
+            ];
+            var arquivos = $("#arquivos")[0].files;
+            $.map(arquivos, function (val) {
+                if ($.inArray(val.name.split('.').pop().toLowerCase(), fileExtension) == -1) {
+                    swal('Oops...', 'São permitidos apenas os formatos: ' + fileExtension.join(', '), 'error');
+                    $("#arquivos").val('');
+                }
+            });
+        });
+    </script>
+}

@@ -1,0 +1,70 @@
+﻿@using Intranet.UI.Util
+@using Intranet.Data.Entities
+@using Intranet.Data.Enums
+@using Intranet.UI.Util
+@using Microsoft.AspNet.Identity
+@model IEnumerable<Intranet.Data.Entities.Comunicado>
+
+@if (!Model.Any())
+{
+    <p>Nenhuma notícia encontrada.</p>
+}
+else
+{
+    <p>Total de @Model.Count() comunicados</p>
+
+    <div class="list-arquivos">
+        <div class="container">
+            <div class="row">
+                @foreach (var comunicado in Model)
+                {
+                    <div class="col l3 m6 s12">
+                        <article>
+                            <div class="item" alt="@comunicado.Titulo" title="@comunicado.Titulo">
+                                @if (User.IsInRole("Comunicados-Admin"))
+                                {
+                                    <div class="edits">
+                                        <div class="icon-edits"></div>
+                                        <div class="subedit">
+                                            <div class="btnEditar" data-link="@Url.Action("Editar", "Comunicados", new { comunicado.Id, comunicado.Tipo })">
+                                                <i class="fa fa-pencil-square-o" aria-hidden="true"></i>Editar
+                                            </div>
+                                            <div class="btnExcluir" data-link="@Url.Action("Excluir", "Comunicados", new { comunicado.Id })">
+                                                <i class="fa fa-trash-o" aria-hidden="true"></i>Excluir
+                                            </div>
+                                        </div>
+                                    </div>
+                                }
+                                <div class="topo">
+                                    @Html.IconeArquivo(comunicado.Anexos.ToString())
+                                    <p>@Html.TamanhoDocumento2(comunicado.Anexos.FirstOrDefault().Arquivo)</p>
+                                </div>
+                                <div class="info">
+                                    <p>@comunicado.Data.ToString("dd 'de' MMMM 'de' yyyy")</p>
+                                    <p class="title">@(comunicado.Titulo.Length > 53 ? comunicado.Titulo.Substring(0, 50) + "..." : comunicado.Titulo)</p>                                       
+                                            @foreach (var shopping in comunicado.Shoppings.Split(','))
+                                        {
+                                                foreach (Empreendimento empreendimento in ViewBag.Empreendimentos)
+                                                {
+                                                    if (Convert.ToInt32(shopping) == empreendimento.Id)
+                                                    {
+                                                        <p><i class="fa fa-angle-double-right" aria-hidden="true"></i> @empreendimento.Nome</p>
+                                                    }
+
+                                                }
+                                        }
+                                        
+                                    <a href="~/Content/Comunicados/@comunicado.Anexos.FirstOrDefault().Arquivo" target="_blank"><button>Visualizar Documento</button></a>
+                                    <a href="@Url.Action("Download", new { arquivo = comunicado.Anexos.FirstOrDefault().Arquivo, tipo = comunicado.Tipo })"><button>Download</button></a>
+                                </div>
+                            </div>
+                        </article>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+    <div class="btn-carregarmais">
+        <img src="~/images/btn-carregarmais.png" alt="">
+    </div>
+}
